@@ -6,12 +6,16 @@
     font-style: normal;
 }
 
+canvas {
+  border: 0px solid black;
+}
 
 body {
-    background-image: url('menu-background@2x.jpg');
-    background-repeat: no-repeat;
+    background-image: url('resources/main-ui/menu-background@2x.jpg');
+background-repeat: no-repeat;
     background-size: cover;
     font-family: 'Tahoma', sans-serif;
+    background-color:#0478fc;
 }
 
 #circle {
@@ -21,7 +25,7 @@ body {
     width: 600px;
     height: 600px;
     border-radius: 50%;
-    background-image: url('menu-osu@2x.png');
+    background-image: url('resources/main-ui/menu-osu@2x.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -65,31 +69,102 @@ margin-top: 10px;
   }
   
   .play {
-    background-image: url('menu-button-play@2x.png');
+    background-image: url('resources/main-ui/menu-button-play@2x.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
+    transition: background-image 0.5s ease;
+  }
+
+  .play:hover {
+    background-image: url('resources/main-ui/menu-button-play-over@2x.png');
   }
 
   .edit {
-    background-image: url('menu-button-edit@2x.png');
+    background-image: url('resources/main-ui/menu-button-edit@2x.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
+    transition: background-image 0.5s ease;
   }
+
+  .edit:hover {
+    background-image: url('resources/main-ui/menu-button-edit-over@2x.png');
+  }
+
 
   .options {
-    background-image: url('menu-button-options@2x.png');
+    background-image: url('resources/main-ui/menu-button-options@2x.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
+    transition: background-image 1s ease;
   }
 
+  .options:hover {
+    background-image: url('resources/main-ui/menu-button-options-over@2x.png');
+  }
+
+
   .exit {
-    background-image: url('menu-button-exit@2x.png');
+    background-image: url('resources/main-ui/menu-button-exit@2x.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
+    transition: background-image 0.5s ease;
+  }
+  .exit:hover {
+    background-image: url('resources/main-ui/menu-button-exit-over@2x.png');
+  }
+
+
+  .freeplay {
+    background-image: url('resources/main-ui/menu-button-freeplay@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    transition: background-image 0.5s ease;
+  }
+
+  .freeplay:hover {
+    background-image: url('resources/main-ui/menu-button-freeplay-over@2x.png');
+  }
+
+  .multiplayer {
+    background-image: url('resources/main-ui/menu-button-multiplayer@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    transition: background-image 0.5s ease;
+  }
+
+  .multiplayer:hover {
+    background-image: url('resources/main-ui/menu-button-multiplayer-over@2x.png');
+  }
+
+
+  .charts {
+    background-image: url('resources/main-ui/menu-button-charts@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    transition: background-image 1s ease;
+  }
+
+  .charts:hover {
+    background-image: url('resources/main-ui/menu-button-charts-over@2x.png');
+  }
+
+
+  .back {
+    background-image: url('resources/main-ui/menu-button-back@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    transition: background-image 0.5s ease;
+  }
+  .back:hover {
+    background-image: url('resources/main-ui/menu-button-exit-back@2x.png');
   }
 
   #options li:hover {
@@ -230,48 +305,48 @@ height: 105px;
   }
 
   .music-jumpto {
-    background-image: url('editor-button-jumpto@2x.png');
+    background-image: url('resources/main-ui/editor-button-jumpto@2x.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
   }
 
   .music-info {
-    background-image: url('editor-button-info@2x.png');
+    background-image: url('resources/main-ui/editor-button-info@2x.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
   }
   .music-pause {
-    background-image: url('editor-button-pause@2x.png');
+    background-image: url('resources/main-ui/editor-button-pause@2x.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
   }
 
   .music-play {
-    background-image: url('editor-button-play@2x.png');
+    background-image: url('resources/main-ui/editor-button-play@2x.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
   }
 
   .music-rewind {
-    background-image: url('editor-button-rewind@2x.png');
+    background-image: url('resources/main-ui/editor-button-rewind@2x.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
   }
 
   .music-stop {
-    background-image: url('editor-button-stop@2x.png');
+    background-image: url('resources/main-ui/editor-button-stop@2x.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
   }
 
   .music-ff {
-    background-image: url('editor-button-ff@2x.png');
+    background-image: url('resources/main-ui/editor-button-ff@2x.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -317,13 +392,13 @@ padding: 10px;
     margin-right: 5px;
   }
   .option-chat {
-    background-image: url('overlay-online@2x.png');
+    background-image: url('resources/main-ui/overlay-online@2x.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
   }
   .option-users {
-    background-image: url('overlay-show@2x.png');
+    background-image: url('resources/main-ui/overlay-show@2x.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;

@@ -1,0 +1,57 @@
+<style>
+#main-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.menu-option {
+  margin: 10px;
+  padding: 10px;
+  background-color: #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#play-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+</style>
+
+<div id="main-menu">
+    <div class="menu-option" id="play">Play</div>
+    <div class="menu-option" id="edit">Edit</div>
+    <div class="menu-option" id="options">Options</div>
+    <div class="menu-option" id="exit">Exit</div>
+  </div>
+  
+  <div id="play-menu" style="display: none;">
+    <div class="menu-option" id="solo">Solo</div>
+    <div class="menu-option" id="multi">Multi</div>
+    <div class="menu-option" id="charts">Charts</div>
+    <div class="menu-option" id="back">Back</div>
+  </div>
+  <script>
+    const playButton = document.getElementById("play");
+const playMenu = document.getElementById("play-menu");
+const backButton = document.getElementById("back");
+
+playButton.addEventListener("click", function() {
+  document.getElementById("main-menu").style.display = "none";
+  playMenu.style.display = "flex";
+});
+
+backButton.addEventListener("click", function() {
+  playMenu.style.display = "none";
+  document.getElementById("main-menu").style.display = "flex";
+});
+
+  </script>
+  
