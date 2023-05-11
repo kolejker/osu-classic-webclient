@@ -1,0 +1,330 @@
+
+@font-face {
+    font-family: 'Tahoma';
+    src: url('/tahoma.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+    background-image: url('menu-background@2x.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Tahoma', sans-serif;
+}
+
+#circle {
+    z-index: 1;
+    animation: heartbeat 1.5s ease-in-out infinite;
+    transition: margin-right 0.1s ease;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background-image: url('menu-osu@2x.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+  }
+  
+  #options {
+    z-index: -6;
+    display: none;
+    position: absolute;
+    left: 380px;
+    top: 70px;
+  }
+  
+  #options ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #options li {
+    transition: padding-right 0.2s ease-out;
+cursor: pointer;
+width: 670px;
+height: 105px;
+margin-top: 10px;
+  }
+  
+  .circle-shifted {
+    margin-right: 400px;
+  }
+  
+  .play {
+    background-image: url('menu-button-play@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+  }
+
+  .edit {
+    background-image: url('menu-button-edit@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+  }
+
+  .options {
+    background-image: url('menu-button-options@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+  }
+
+  .exit {
+    background-image: url('menu-button-exit@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+  }
+
+  #options li:hover {
+    padding-right: 120px;
+    width: 670px;
+height: 105px;
+}
+
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    75% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.profile-card {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    color: white;
+  }
+  
+  .profile-card img {
+    width: 90px;
+    height: 90px;
+    border-radius: 2%;
+    margin-right: 10px;
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .name {
+    font-size: 1.6em;
+
+  }
+  
+  .score,
+  .accuracy {
+    font-size: 1em;
+  }
+  
+  .level {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+  }
+  
+  .level .label {
+    margin-right: 10px;
+  }
+  
+  .level-bar {
+    width: 200px;
+    height: 6px;
+    border-style: solid;
+
+    border-width: 2px;
+    border-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .level-progress {
+    height: 100%;
+    background-color: #ffe368c0;
+  }
+  
+  .controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 5px;
+  }
+  
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .square {
+    width: 35px;
+    height: 35px;
+
+    margin: 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .seek-bar {
+    margin-right: 7px;
+    width: 305px;
+  }
+  
+  .slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 7px;
+    background: rgb(255, 255, 255);
+    outline: none;
+    opacity: 0.1;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  input[type="range"]::-webkit-progress-value {
+    background-color: blue;
+  }
+
+  .music-jumpto {
+    background-image: url('editor-button-jumpto@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+  }
+
+  .music-info {
+    background-image: url('editor-button-info@2x.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+  .music-pause {
+    background-image: url('editor-button-pause@2x.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .music-play {
+    background-image: url('editor-button-play@2x.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .music-rewind {
+    background-image: url('editor-button-rewind@2x.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .music-stop {
+    background-image: url('editor-button-stop@2x.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .music-ff {
+    background-image: url('editor-button-ff@2x.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+  .logo-container {
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .logo-container:hover img {
+    transform: scale(1.2);
+    filter: hue-rotate(800deg);
+    transform-origin: bottom left;
+  }
+  
+  .logo-container img {
+height: 40px;
+filter: hue-rotate(60deg);
+transition: transform 0.3s ease-in-out;
+  }
+  
+
+  .options-container {
+    position: fixed;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+margin-right: 10px;
+    bottom: 0;
+    right: 0;
+  }
+  
+  .option {
+padding: 10px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .option i {
+    margin-right: 5px;
+  }
+  .option-chat {
+    background-image: url('overlay-online@2x.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+  .option-users {
+    background-image: url('overlay-show@2x.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
