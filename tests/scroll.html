@@ -1,0 +1,48 @@
+<style>
+.scroll-container {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  width: 100%;
+  height: 200px; /* Adjust the height as needed */
+}
+
+.scroll-list {
+  display: inline-block;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  transform-origin: top center;
+}
+
+.scroll-list li {
+  display: inline-block;
+  margin-right: 20px; /* Adjust the spacing between items */
+}
+
+
+</style>
+<div class="scroll-container">
+    <ul class="scroll-list">
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+      <!-- Add more list items as needed -->
+    </ul>
+  </div>
+  
+  <script>
+const scrollContainer = document.querySelector('.scroll-container');
+const scrollList = document.querySelector('.scroll-list');
+
+scrollContainer.addEventListener('scroll', () => {
+  const scrollTop = scrollContainer.scrollTop;
+  const maxScrollTop = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+  const scrollPercentage = scrollTop / maxScrollTop;
+  const angle = scrollPercentage * 180 - 90; // Adjust the angle as needed
+
+  scrollList.style.transform = `rotateX(${angle}deg)`;
+});
+
+  </script>
+  

@@ -1,0 +1,80 @@
+@font-face {
+  font-family: 'Tahoma';
+  src: url('/tahoma.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+body {
+  margin: 0;
+  background-image: url('../resources/main-ui/menu-background@2x.jpg');
+background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Tahoma', sans-serif;
+  background-color:#0478fc;
+}
+  
+.topnav {
+  height: 220px;
+  width: 100%;
+  top: 0;
+  background-image: url('../resources/main-ui/songselect-top@2x.png');
+  background-size: cover; /* This will stretch the image to fit the width */
+  background-position: center; /* Center the image within the div */
+}
+
+
+
+  .backcontainer {
+    position: absolute;
+    bottom: 0;
+  }
+  
+  .backcontainer img {
+
+
+width: 270px;
+    top: 637px;
+    left: 0;
+  }
+  
+  #loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    opacity: 1;
+    z-index: 9999;
+    transition: opacity 0.5s, height 0.5s 2s;
+  }
+
+  
+  #fadeContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0.5s;
+    z-index: 9999;
+  }
+  
+
+  
+  .bottom {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 140px; 
+    z-index: -1;
+    background-image: url('../resources/main-ui/songselect-bottom@2x.png');
+    background-size:contain;
+  }
+  

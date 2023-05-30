@@ -5,13 +5,17 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="script.js"></script>
   <script src="stars.js"></script>
+  <script src="fadeoutloader.js"></script>
+  <script src="fadeinloader.js"></script>
 </head>
-<body>
+
     <body>
+      <div id="loader"></div>
+      <div id="cursor"></div>
         <div class="profile-card">
           <img src="osu.jfif">
           <div class="profile-info">
-            <div class="name">Albert</div>
+            <div class="name">Guest</div>
             <div class="score">Score: 10000</div>
             <div class="accuracy">Accuracy: 95%</div>
             <div class="level">
@@ -25,13 +29,14 @@
       </body>
       <div class="controls">
         <div class="buttons">
-          <button class="square" class="music-jumpto"></button>
-          <button class="square" class="music-rewind"></button>
-          <button class="square" class="music-play"></button>
-          <button class="square" class="music-pause"></button>
-          <button class="square" class="music-stop" ></button>
-          <button class="square" class="music-ff"></button>
-          <button class="square" class="music-info"></button>
+          <button class="square music-jumpto"></button>
+
+          <button class="square music-rewind"></button>
+          <button class="square music-play"></button>
+          <button class="square music-pause"></button>
+          <button class="square music-stop" ></button>
+          <button class="square music-ff"></button>
+          <button class="square music-info"></button>
         </div>
         <div class="seek-bar">
           <input type="range" min="0" max="100" value="0" class="slider">
@@ -39,17 +44,24 @@
       </div>
       
     <div class="container">
+      <div class="pulse"></div>
 
     <div id="circle" onclick="moveCircle()">
    
       </div>
-      <div id="options">
+      <div id="main-menu">
         <ul>
-          <li class="play" ></li>
+          <li class="play" onclick="goPlay(); fadeOutLoader()"> </li>
           <li class="edit" ></li>
-          <li class="options" ></li>
+          <li class="options"  onclick="goOptions(); fadeOutLoader()"></li>
           <li class="exit" ></li>
         </ul>
+      </div>
+      <div id="play-menu" style="display: none;">
+        <div class="solo">Solo</div>
+        <div class="multi"></div>
+        <div class="charts" ></div>
+        <div class="back" id="back"></div>
       </div>
     </div>   
     <div class="logo-container">
@@ -62,6 +74,11 @@
 
         </div>
       </div>
-      <canvas id="canvas"></canvas>      
+      <div id="tips" >
+        <div id="tips-text">Welcome to osu!</div>
+      </div>
+      
+      <canvas id="canvas"></canvas>     
+    <div class="osudirect"></div>
 </body>
 </html>

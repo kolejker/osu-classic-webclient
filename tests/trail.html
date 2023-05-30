@@ -1,0 +1,76 @@
+<style>
+    canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+</style>
+<canvas id="canvas"></canvas>
+<script>
+// Get the canvas element
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+// Set canvas size to match the window
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Cursor position variables
+var cursorX = 0;
+var cursorY = 0;
+
+// Trail options
+var trailLength = 50;    // Number of trail segments
+var trailSpacing = 5;    // Spacing between trail segments
+var trailTexture = new Image();
+trailTexture.src = "cursortrail@2x.png";   // Replace with the path to your trail texture image
+
+// Initialize trail array
+var trail = [];
+
+// Update cursor position
+function updateCursor(e) {
+  var rect = canvas.getBoundingClientRect();
+  cursorX = e.clientX - rect.left;
+  cursorY = e.clientY - rect.top;
+}
+
+// Update trail array
+function updateTrail() {
+  trail.push({ x: cursorX, y: cursorY });
+  if (trail.length > trailLength) {
+    trail.shift();
+  }
+}
+
+// Render the trail
+function renderTrail() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  for (var i = 0; i < trail.length; i++) {
+    var segment = trail[i];
+    var textureOffset = i * trailSpacing;
+    
+    ctx.globalAlpha = 1 - (i / trail.length);  // Fade out trail segments
+    ctx.drawImage(trailTexture, segment.x - textureOffset, segment.y - textureOffset);
+  }
+  
+  ctx.globalAlpha = 1;  // Reset global alpha
+}
+
+// Update and render loop
+function loop() {
+  updateTrail();
+  renderTrail();
+  requestAnimationFrame(loop);
+}
+
+// Attach event listener to track cursor movement
+canvas.addEventListener("mousemove", updateCursor);
+
+// Start the loop
+loop();
+
+</script>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>osu!classic</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="script.js"></script>
+  <script src="stars.js"></script>
+  <script src="../fadeoutloader.js"></script>
+  <script src="../fadeinloader.js"></script>
+</head>
+<body onload="fadeInLoader()">
+  <div id="loader"></div>
+  <div class="topnav">
+    <div class="container">
+      <div class="first-div">
+        <h1>Options</h1>
+        <p>Change the way osu! behaves</p>
+      </div>
+    
+      <div class="second-div">
+        <a class="active" href="#Graphics">Graphics</a>
+        <a href="#Audio">Audio</a>
+        <a href="#Input">Input</a>
+        <a href="#Online">Online</a>
+        <a href="#Maintenance">Maintenance</a>
+        <a href="#Skin" class="brothinkhespecial">Skin</a>  
+      </div>
+      <div class="third-div"></div>
+    </div>
+  </div>
+
+  <a href="../index.html" onclick="goBack(); fadeOutLoader()">
+    <div class="backcontainer">
+      <img src="../resources/main-ui/menu-back@2x.png">
+    </div>
+  </a>
+</body>
+</html>
