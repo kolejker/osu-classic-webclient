@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="sliderCanvas" width="512" height="384"></canvas>
+    <br>
+    <textarea id="sliderInput" rows="4" cols="50"></textarea>
+    <br>
+    <button onclick="drawSlider()">Draw Slider</button>
+
+    <script>
+        function drawSlider() {
+            const canvas = document.getElementById("sliderCanvas");
+            const ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const input = document.getElementById("sliderInput").value;
+            const sliderLines = input.split("|");
+
+            for (let i = 0; i < sliderLines.length; i++) {
+                const lineData = sliderLines[i].split(",");
+                const x = parseInt(lineData[0]);
+                const y = parseInt(lineData[1]);
+                const curvePoints = lineData[5].split("|");
+
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+
+                for (let j = 0; j < curvePoints.length; j++) {
+                    const point = curvePoints[j].split(":");
+                    const curveX = parseInt(point[0]);
+                    const curveY = parseInt(point[1]);
+                    ctx.lineTo(curveX, curveY);
+                }
+
+                ctx.stroke();
+            }
+        }
+    </script>
+</body>
+</html>

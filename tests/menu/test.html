@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>osu beatmap blya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+  <script src="loader.js"></script>
+ 
+</head>
+<body>
+    <main>
+
+        <span class="file-selector">
+            <input type="file" id="fileInput" multiple>
+        </span>
+        <img id="bgImage" alt="Background Image">
+        <pre id="beatmapText"></pre>
+        <audio id="audio" controls></audio>
+    
+        <section id="metadata">
+          <h2>Metadata</h2>
+        </section>
+    
+        <section id="difficulties">
+          <h2>Difficulties</h2>
+          <ul id="difficultyList"></ul>
+        </section>
+    
+        <section id="history">
+          <h2>Opened Files</h2>
+          <ul id="historyList"></ul>
+        </section>
+    </main>
+    <style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+#bgImage {
+  width: 100%;
+  max-width: 512px;
+  height: auto;
+  object-fit: cover;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.file-selector {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  margin: 10px;
+}
+
+.file-selector label {
+  cursor: pointer;
+}
+
+audio {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+section {
+  margin-top: 20px;
+}
+
+section h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+#metadata,
+#difficulties {
+  text-align: center;
+}
+
+#difficultyList {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#difficultyList li {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+#historyList {
+  list-style-type: none;
+  padding: 0;
+}
+
+#historyList li {
+  margin-bottom: 10px;
+}
+
+body {
+  background-color: #f8f8f8;
+}
+
+main {
+  padding: 40px;
+}
+
+#bgImage {
+  margin-top: 40px;
+  border-radius: 20px;
+}
+
+.file-selector {
+  background-color: #777;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  margin: 20px;
+}
+
+audio {
+  margin-top: 40px;
+  max-width: 600px;
+}
+
+section h2 {
+  color: #777;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+#difficultyList li {
+  background-color: #777;
+  color: #fff;
+  padding: 12px;
+  margin: 8px;
+  border-radius: 8px;
+}
+
+    </style>
+  <script>
+    document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
+  </script>
+</body>
+</html>

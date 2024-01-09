@@ -72,9 +72,275 @@ width: 270px;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 140px; 
+    height: 142px; 
     z-index: -1;
     background-image: url('../resources/main-ui/songselect-bottom@2x.png');
     background-size:contain;
   }
   
+
+  #optionscont {
+    text-align: center;
+    margin-left: 277px;
+  }
+  
+  .options {
+    display: flex;
+
+
+    list-style-type: none;
+  }
+  
+  .options li {
+    display: inline-block;
+
+
+
+    cursor: pointer;
+  }
+  
+
+  .mode {
+    background-image: url('../resources/main-ui/selection-mode@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    transition: background-image 0.1s ease;
+    width: 129px;
+    margin-right: 6px;
+    height: 132px;
+  }
+
+  .mode:hover {
+    background-image: url('../resources/main-ui/selection-mode-over@2x.png');
+  }
+
+  .mods {
+    background-image: url('../resources/main-ui/selection-mods@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 109px;
+    height: 132px;
+    background-position: center center;
+    transition: background-image 0.1s ease;
+    margin-right: 5px;
+  }
+
+  .mods:hover {
+    background-image: url('../resources/main-ui/selection-mods-over@2x.png');
+  }
+
+  .random {
+    background-image: url('../resources/main-ui/selection-random@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 109px;
+    height: 132px;
+    background-position: center center;
+    transition: background-image 0.1s ease;
+    margin-right: 4px;
+  }
+
+  .random:hover {
+    background-image: url('../resources/main-ui/selection-random-over@2x.png');
+  }
+  .boptions {
+    background-image: url('../resources/main-ui/selection-options@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 113px;
+    height: 132px;
+    background-position: center center;
+    transition: background-image 0.1s ease;
+    margin-right: 3px;
+  }
+
+  .boptions:hover {
+    background-image: url('../resources/main-ui/selection-options-over@2x.png');
+  }
+
+  .seloptions {
+    background-image: url('../resources/main-ui/selection-selectoptions@2x.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 113px;
+    height: 132px;
+    background-position: center center;
+    transition: background-image 0.1s ease;
+
+  }
+
+  .seloptions:hover {
+    background-image: url('../resources/main-ui/selection-selectoptions-over@2x.png');
+  }
+
+  #cookiecont {
+    position: absolute;
+    bottom: -83px;
+    right: -57px;
+    text-align: center;
+
+  }
+  
+  .circle {
+    z-index: 1;
+    animation: heartbeat 0.5s ease-in-out infinite;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-image: url('../resources/main-ui/menu-osu@2x.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  
+  }
+
+  @keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    1% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+.dropbtn {
+  background-color: #000000;
+  border: 1.7px solid rgb(255, 115, 0);
+  color: white;
+font-weight:bolder;
+  font-size: 26px;
+width: 430px;
+text-align: left;
+
+  cursor: pointer;
+  height: 32px;
+  top: 150px;
+  left: 12px;
+  position:absolute;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #444444;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 183px;
+  left:15px;
+  width: 427px;
+  height: 15px;
+  position:absolute;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: rgb(255, 255, 255);
+padding-left: 4px;
+  text-decoration: none;
+  display: block;
+  background-color: #000000;
+  border: 1.7px solid rgb(255, 255, 255);
+font-weight:lighter;
+  font-size: 23px;
+  overflow: auto;
+
+
+text-align: left;
+  cursor: pointer;
+
+
+}
+
+.dropdown a:hover {background-color: #616161;}
+
+.show {display: block;}
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+.fourm {
+  z-index: 1;
+  position: absolute;
+  top: 150px;
+  left: 465px;
+  width: 35px;
+  height: 35px;
+cursor: pointer;
+  background-image: url('../resources/main-ui/rank-forum@2x.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+
+}
+
+.metadata {
+  color: white;
+  position: absolute;
+  top: 10px;
+  left: 60px;
+  font-size: 30px
+}
+
+.sorting {
+  position: absolute;
+  width: 850px;
+top: 64px;
+margin-left: 1035px;
+}
+
+.sorting a {
+  font-weight: bold;
+
+width: 160px;
+height: 25px;
+  border-radius: 10px 10px 0 0;
+  float: left;
+  color: #f2f2f2;
+  margin-right: -20px;
+  text-align: center;
+  background-color: #dc143b;
+  padding: 2px 14px;
+  border-style: none;
+  border-color:#333;
+  border-width: 1px;
+  text-decoration: none;
+  border: 1px solid black;
+  font-size: 22px;
+  transition: background-color 0.1s ease-in-out;
+}
+
+.sorting p {
+  clear: both;
+  bottom: 0;
+  color: #f2f2f2;
+  padding: 0px 6px;
+  margin: 0;
+  font-size: 27px;
+}
+
+.sorting a:hover {
+  background-color: #d8526d;
+  color: rgb(255, 255, 255);
+}
+
+.sorting a.active {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+}

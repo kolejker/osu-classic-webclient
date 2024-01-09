@@ -4,14 +4,33 @@
   <title>osu!classic</title>
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="script.js"></script>
-  <script src="stars.js"></script>
+  <script src="dropdown.js"></script>
   <script src="../fadeoutloader.js"></script>
   <script src="../fadeinloader.js"></script>
 </head>
 <body onload="fadeInLoader()">
   <div id="loader"></div>
   <div class="topnav">
+    <div id="metadata" class="metadata">Artist - Title <br> <span style="font-size: 20px;">Mapped by rekt</span></div>
+    <div class="dropdown">
+      <button onclick="myFunction()" class="dropbtn">Local Ranking</button>
+      <div id="myDropdown" class="dropdown-content">
+        <a href="localr">Local Ranking</a>
+        <a href="#countryr">Country Ranking</a>
+        <a href="#globalr">Global Ranking</a>
+        <a href="#globalrmod">Global Ranking (Selected Mods)</a>
+        <a href="#friendr">Friend Ranking</a>
+      </div>
+      <div class="fourm"></div>
+      <div class="sorting">
 
+        <a href="#Collection">Collection</a>
+        <a href="#Date">Date</a>
+        <a href="#Artist">Artist</a>
+        <a href="#Difficulty">Difficulty</a>
+        <a class="active" href="#all">Show All</a>
+      </div>
+    </div>
 
   </div>
   <a href="../index.html" onclick="goBack(); fadeOutLoader()">
@@ -19,7 +38,20 @@
       <img src="../resources/main-ui/menu-back@2x.png">
     </div>
   </a>
-  <div class="bottom"></div>
+  <div class="bottom">
+    <div id="optionscont">
+      <ul class="options">
+        <li class="mode"></li>
+        <li class="mods" ></li>
+        <li class="random" ></li>
+        <li class="boptions"></li>
+        <li class="seloptions"></li>
+      </ul>
+    </div>
+    <div id="cookiecont">
+      <div class="circle"></div>
+    </div>
+  </div>
 
 </body>
 </html>

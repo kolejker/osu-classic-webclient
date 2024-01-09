@@ -1,0 +1,229 @@
+
+var openedFiles = []; 
+
+function handleFileSelect(evt) {
+var files = evt.target.files; 
+
+
+for (var i = 0, f; f = files[i]; i++) {
+var reader = new FileReader();
+
+
+reader.onload = (function(file) {
+  return function(e) {
+    var fileExtension = file.name.split('.').pop().toLowerCase();
+
+
+    if (fileExtension === 'osz') {
+      openedFiles.push({ name: file.name, data: e.target.result });
+    }
+
+    if (fileExtension === 'osz') {
+
+      var renamedFile = new File([e.target.result], file.name.replace('.osz', '.zip'), {
+        type: 'application/zip'
+      });
+
+      e.target.result = renamedFile;
+    }
+        JSZip.loadAsync(e.target.result)
+          .then(function(zip) {
+            var difficulties = [];
+            var metadata = null; 
+            var previewTime = 0; 
+
+            zip.forEach(function(relativePath, file) {
+              if (relativePath.endsWith('.osu')) {
+                file.async('text')
+                  .then(function(content) {
+                    var version = getVersion(content); 
+
+                    if (version) {
+                      difficulties.push(version);
+                    }
+
+                    if (!metadata) {
+                      metadata = getMetadata(content);
+                      displayMetadata(metadata);
+                    }
+
+                    if (previewTime === 0) {
+                      previewTime = getPreviewTime(content);
+                    }
+
+
+                    if (difficulties.length > 0) {
+                      var difficultyList = document.getElementById('difficultyList');
+                      difficultyList.innerHTML = ''; 
+
+                      difficulties.forEach(function(difficulty) {
+                        var listItem = document.createElement('li');
+                        listItem.textContent = difficulty;
+                        difficultyList.appendChild(listItem);
+                      });
+                    }
+                  });
+              } 
+              else if (relativePath.endsWith('.mp3') || relativePath.endsWith('.wav') || relativePath.endsWith('.ogg')) {
+file.async('blob')
+  .then(function (content) {
+    var audioUrl = URL.createObjectURL(content);
+    var audioElement = document.getElementById('audio');
+    audioElement.src = audioUrl;
+
+    handleAudioPreviewTime(previewTime);
+  });
+}
+
+
+              else if (relativePath.endsWith('.jpg') || relativePath.endsWith('.jpeg') || relativePath.endsWith('.png')) {
+                file.async('base64')
+                  .then(function(content) {
+                    var bgImageElement = document.getElementById('bgImage');
+                    var fileExtension = file.name.split('.').pop().toLowerCase();
+                    bgImageElement.src = 'data:image/' + fileExtension + ';base64,' + content;
+                  });
+              }
+            });
+            if (metadata) {
+          displayMetadata(metadata);
+        }
+        displayHistory(); 
+      })
+      .catch(function (error) {
+        console.error('Error reading the zip file:', error);
+      });
+  };
+})(f);
+
+reader.readAsBinaryString(f);
+}
+}
+
+
+function displayHistory() {
+  var historyList = document.getElementById('historyList');
+  historyList.innerHTML = ''; 
+
+  openedFiles.forEach(function(fileData) {
+    var listItem = document.createElement('li');
+    var fileLink = document.createElement('a');
+    fileLink.textContent = fileData.name;
+    fileLink.href = '#'; 
+    fileLink.addEventListener('click', function() {
+
+      JSZip.loadAsync(fileData.data)
+        .then(function(zip) {
+
+          zip.forEach(function(relativePath, file) {
+            if (relativePath.endsWith('.osu')) {
+              file.async('text')
+                .then(function(content) {
+                  var metadata = getMetadata(content);
+                  displayMetadata(metadata);
+                });
+                if (previewTime === 0) {
+                    previewTime = getPreviewTime(content);
+                  }
+            }
+
+            else if (relativePath.endsWith('.mp3') || relativePath.endsWith('.wav') || relativePath.endsWith('.ogg')) {
+                file.async('blob')
+                  .then(function (content) {
+                    var audioUrl = URL.createObjectURL(content);
+                    var audioElement = document.getElementById('audio');
+                    audioElement.src = audioUrl;
+                    handleAudioPreviewTime(previewTime);
+                  });
+                }
+
+            if (relativePath.endsWith('.jpg') || relativePath.endsWith('.jpeg') || relativePath.endsWith('.png')) {
+              file.async('base64')
+                .then(function(content) {
+                  var bgImageElement = document.getElementById('bgImage');
+                  var fileExtension = file.name.split('.').pop().toLowerCase();
+                  bgImageElement.src = 'data:image/' + fileExtension + ';base64,' + content;
+                });
+            }
+          });
+
+        })
+        .catch(function(error) {
+          console.error('Error reading the osz file:', error);
+        });
+    });
+    listItem.appendChild(fileLink);
+    historyList.appendChild(listItem);
+  });
+}
+
+function handleAudioPreviewTime(previewTime) {
+var audioElement = document.getElementById('audio');
+audioElement.currentTime = previewTime / 1000;
+audioElement.addEventListener('loadedmetadata', function () {
+  audioElement.play();
+});
+}
+function getVersion(content) {
+  var lines = content.split('\n');
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i].trim();
+    if (line.startsWith('Version:')) {
+      return line.substring(8).trim();
+    }
+  }
+  return '';
+}
+
+function getMetadata(content) {
+  var metadata = {
+    title: '',
+    artist: '',
+    creator: ''
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
+});
+
+  var startIndex = content.indexOf('[Metadata]');
+  var endIndex = content.indexOf('[', startIndex + 1);
+
+  if (startIndex !== -1 && endIndex !== -1) {
+    var metadataSection = content.substring(startIndex, endIndex);
+    var lines = metadataSection.split('\n');
+
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i].trim();
+
+      if (line.startsWith('Title:')) {
+        metadata.title = line.substring(6).trim();
+      } else if (line.startsWith('Artist:')) {
+        metadata.artist = line.substring(7).trim();
+      } else if (line.startsWith('Creator:')) {
+        metadata.creator = line.substring(8).trim();
+      }
+    }
+  }
+
+  return metadata;
+}
+
+function getPreviewTime(content) {
+  var lines = content.split('\n');
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i].trim();
+    if (line.startsWith('PreviewTime:')) {
+      return parseInt(line.substring(12).trim());
+    }
+  }
+  return 0;
+}
+
+function displayMetadata(metadata) {
+  var metadataElement = document.getElementById('metadata');
+  metadataElement.innerHTML = metadata.artist + ' - ' + metadata.title + '<br>' +
+'<span style="font-size: smaller;"> Mapped by' + metadata.creator + '</span>';
+
+}
+

@@ -64,3 +64,8 @@ document.addEventListener('mousemove', function(event) {
   cursor.style.left = event.clientX + 'px';
   cursor.style.top = event.clientY + 'px';
 });
+
+function playHoverSound() {
+  var sound = document.getElementById("hover-sound");
+  sound.play();
+}

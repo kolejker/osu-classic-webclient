@@ -1,69 +1,184 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>osu bitmap blya</title>
+  <title>osu beatmap blya</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
   <script>
-    function handleFileSelect(evt) {
-      var files = evt.target.files; // FileList object
+    var openedFiles = []; 
 
-      // Loop through the selected files
-      for (var i = 0, f; f = files[i]; i++) {
-        var reader = new FileReader();
+function handleFileSelect(evt) {
+  var files = evt.target.files; 
 
-        // Closure to capture the file information.
-        reader.onload = (function(file) {
-          return function(e) {
-            var fileExtension = file.name.split('.').pop().toLowerCase();
 
-            if (fileExtension === 'osz') {
-              // If the file extension is .osz, rename it to .zip
-              var renamedFile = new File([e.target.result], file.name.replace('.osz', '.zip'), {
-                type: 'application/zip'
-              });
+  for (var i = 0, f; f = files[i]; i++) {
+    var reader = new FileReader();
 
-              e.target.result = renamedFile;
-            }
 
+    reader.onload = (function(file) {
+      return function(e) {
+        var fileExtension = file.name.split('.').pop().toLowerCase();
+
+
+        if (fileExtension === 'osz') {
+          openedFiles.push({ name: file.name, data: e.target.result });
+        }
+
+        if (fileExtension === 'osz') {
+
+          var renamedFile = new File([e.target.result], file.name.replace('.osz', '.zip'), {
+            type: 'application/zip'
+          });
+
+          e.target.result = renamedFile;
+        }
             JSZip.loadAsync(e.target.result)
               .then(function(zip) {
-                // Display the BG.jpg image if it exists
-                var bgImage = zip.file('BG.jpg');
-                if (bgImage) {
-                  bgImage.async('base64')
-                    .then(function(content) {
-                      var bgImageElement = document.getElementById('bgImage');
-                      bgImageElement.src = 'data:image/jpeg;base64,' + content;
-                    });
-                }
-                JSZip.loadAsync(e.target.result)
-  .then(function(zip) {
-    // Search for any .osu file in the zip
-    var beatmapFile = null;
-    zip.forEach(function(relativePath, file) {
-      if (relativePath.endsWith('.osu')) {
-        beatmapFile = file;
-      }
-    });
+                var difficulties = [];
+                var metadata = null; 
+                var previewTime = 0; 
 
-    if (beatmapFile) {
-      beatmapFile.async('text')
-        .then(function(content) {
-          var beatmapTextElement = document.getElementById('beatmapText');
-          var displayedFields = parseBeatmapFields(content);
-          beatmapTextElement.innerHTML = displayedFields;
-          var previewTime = getPreviewTime(content);
-          playAudio(previewTime);
+                zip.forEach(function(relativePath, file) {
+                  if (relativePath.endsWith('.osu')) {
+                    file.async('text')
+                      .then(function(content) {
+                        var version = getVersion(content); 
+
+                        if (version) {
+                          difficulties.push(version);
+                        }
+
+                        if (!metadata) {
+                          metadata = getMetadata(content);
+                          displayMetadata(metadata);
+                        }
+
+                        if (previewTime === 0) {
+                          previewTime = getPreviewTime(content);
+                        }
+
+
+                        if (difficulties.length > 0) {
+                          var difficultyList = document.getElementById('difficultyList');
+                          difficultyList.innerHTML = ''; 
+
+                          difficulties.forEach(function(difficulty) {
+                            var listItem = document.createElement('li');
+                            listItem.textContent = difficulty;
+                            difficultyList.appendChild(listItem);
+                          });
+                        }
+                      });
+                  } 
+                  else if (relativePath.endsWith('.mp3')) {
+    file.async('blob')
+      .then(function (content) {
+        var audioUrl = URL.createObjectURL(content);
+        var audioElement = document.getElementById('audio');
+        audioElement.src = audioUrl;
+
+        handleAudioPreviewTime(previewTime);
+      });
+  }
+  
+
+                  else if (relativePath.endsWith('.jpg') || relativePath.endsWith('.jpeg') || relativePath.endsWith('.png')) {
+                    file.async('base64')
+                      .then(function(content) {
+                        var bgImageElement = document.getElementById('bgImage');
+                        var fileExtension = file.name.split('.').pop().toLowerCase();
+                        bgImageElement.src = 'data:image/' + fileExtension + ';base64,' + content;
+                      });
+                  }
+                });
+                if (metadata) {
+              displayMetadata(metadata);
+            }
+            displayHistory(); 
+          })
+          .catch(function (error) {
+            console.error('Error reading the zip file:', error);
+          });
+      };
+    })(f);
+
+    reader.readAsBinaryString(f);
+  }
+}
+
+
+    function displayHistory() {
+      var historyList = document.getElementById('historyList');
+      historyList.innerHTML = ''; 
+
+      openedFiles.forEach(function(fileData) {
+        var listItem = document.createElement('li');
+        var fileLink = document.createElement('a');
+        fileLink.textContent = fileData.name;
+        fileLink.href = '#'; 
+        fileLink.addEventListener('click', function() {
+
+          JSZip.loadAsync(fileData.data)
+            .then(function(zip) {
+            })
+            .catch(function(error) {
+              console.error('Error reading the zip file:', error);
+            });
         });
-    } else {
-      // No .osu file found
-      console.log('No beatmap file found in the zip');
+        listItem.appendChild(fileLink);
+        historyList.appendChild(listItem);
+      });
+    }
+    
+    function handleAudioPreviewTime(previewTime) {
+    var audioElement = document.getElementById('audio');
+    audioElement.currentTime = previewTime / 1000;
+    audioElement.addEventListener('loadedmetadata', function () {
+      audioElement.play();
+    });
+  }
+    function getVersion(content) {
+      var lines = content.split('\n');
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i].trim();
+        if (line.startsWith('Version:')) {
+          return line.substring(8).trim();
+        }
+      }
+      return '';
     }
 
-    // Rest of the code...
+    function getMetadata(content) {
+      var metadata = {
+        title: '',
+        artist: '',
+        creator: ''
+      };
 
-    function parseBeatmapFields(content) {
-      // Same as before...
+      document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
+    });
+    
+      var startIndex = content.indexOf('[Metadata]');
+      var endIndex = content.indexOf('[', startIndex + 1);
+
+      if (startIndex !== -1 && endIndex !== -1) {
+        var metadataSection = content.substring(startIndex, endIndex);
+        var lines = metadataSection.split('\n');
+
+        for (var i = 0; i < lines.length; i++) {
+          var line = lines[i].trim();
+
+          if (line.startsWith('Title:')) {
+            metadata.title = line.substring(6).trim();
+          } else if (line.startsWith('Artist:')) {
+            metadata.artist = line.substring(7).trim();
+          } else if (line.startsWith('Creator:')) {
+            metadata.creator = line.substring(8).trim();
+          }
+        }
+      }
+
+      return metadata;
     }
 
     function getPreviewTime(content) {
@@ -74,123 +189,16 @@
           return parseInt(line.substring(12).trim());
         }
       }
-      return 0; // Default to 0 if PreviewTime is not found
+      return 0;
     }
 
-    function playAudio(previewTime) {
-      var audioElement = document.getElementById('audio');
-      audioElement.currentTime = previewTime / 1000; // Convert milliseconds to seconds
-      audioElement.play();
-    }
-  })
-  .catch(function(error) {
-    console.error('Error reading the zip file:', error);
-  });
+    function displayMetadata(metadata) {
+      var metadataElement = document.getElementById('metadata');
+      metadataElement.innerHTML = metadata.artist + ' - ' + metadata.title + '<br>' +
+  '<span style="font-size: smaller;"> Mapped by' + metadata.creator + '</span>';
 
-
-                JSZip.loadAsync(e.target.result)
-  .then(function(zip) {
-    // Search for any .osu file in the zip
-    var beatmapFile = null;
-    zip.forEach(function (relativePath, file) {
-      if (relativePath.endsWith('.osu')) {
-        beatmapFile = file;
-      }
-    });
-
-    if (beatmapFile) {
-      beatmapFile.async('text')
-        .then(function(content) {
-          var beatmapTextElement = document.getElementById('beatmapText');
-          var displayedFields = parseBeatmapFields(content);
-          beatmapTextElement.innerHTML = displayedFields;
-        });
-    } else {
-      // No .osu file found
-      console.log('No beatmap file found in the zip');
     }
 
-    // Rest of the code...
-
-    function parseBeatmapFields(content) {
-      // Split the content into lines
-      var lines = content.split('\n');
-
-      // Initialize variables for the desired fields
-      var title = '';
-      var artist = '';
-      var creator = '';
-      var version = '';
-      var source = '';
-      var hpDrainRate = '';
-      var circleSize = '';
-      var overallDifficulty = '';
-      var approachRate = '';
-
-
-      for (var i = 0; i < lines.length; i++) {
-        var line = lines[i].trim();
-        if (line.startsWith('Title:')) {
-          title = line.substring(6).trim();
-        } else if (line.startsWith('Artist:')) {
-          artist = line.substring(7).trim();
-        } else if (line.startsWith('Creator:')) {
-          creator = line.substring(8).trim();
-        } else if (line.startsWith('Version:')) {
-          version = line.substring(8).trim();
-        } else if (line.startsWith('Source:')) {
-          source = line.substring(7).trim();
-        } else if (line.startsWith('HPDrainRate:')) {
-          hpDrainRate = line.substring(12).trim();
-        } else if (line.startsWith('CircleSize:')) {
-          circleSize = line.substring(11).trim();
-        } else if (line.startsWith('OverallDifficulty:')) {
-          overallDifficulty = line.substring(18).trim();
-        } else if (line.startsWith('ApproachRate:')) {
-          approachRate = line.substring(13).trim();
-        }
-      }
-
-      // Construct the HTML markup with the desired fields
-      var displayedFields = '<p><strong>Title:</strong> ' + title + '</p>' +
-                            '<p><strong>Artist:</strong> ' + artist + '</p>' +
-                            '<p><strong>Creator:</strong> ' + creator + '</p>' +
-                            '<p><strong>Version:</strong> ' + version + '</p>' +
-                            '<p><strong>Source:</strong> ' + source + '</p>' +
-                            '<p><strong>HP Drain Rate:</strong> ' + hpDrainRate + '</p>' +
-                            '<p><strong>Circle Size:</strong> ' + circleSize + '</p>' +
-                            '<p><strong>Overall Difficulty:</strong> ' + overallDifficulty + '</p>' +
-                            '<p><strong>Approach Rate:</strong> ' + approachRate + '</p>';
-
-      return displayedFields;
-    }
-  })
-  .catch(function(error) {
-    console.error('Error reading the zip file:', error);
-  });
-
-                // Play the audio.mp3 file if it exists
-                var audioFile = zip.file('audio.mp3');
-                if (audioFile) {
-                  audioFile.async('blob')
-                    .then(function(content) {
-                      var audioUrl = URL.createObjectURL(content);
-                      var audioElement = document.getElementById('audio');
-                      audioElement.src = audioUrl;
-                      audioElement.play();
-                    });
-                }
-              })
-              .catch(function(error) {
-                console.error('Error reading the zip file:', error);
-              });
-          };
-        })(f);
-
-        // Read the zip file as binary string
-        reader.readAsBinaryString(f);
-      }
-    }
   </script>
 </head>
 <body>
@@ -200,8 +208,16 @@
 
   <audio id="audio" controls></audio>
 
+  <div id="metadata"></div>
+  <div id="difficulties">
+
+    <ul id="difficultyList"></ul>
+  </div>
+  <div>
+    <h3>Opened Files:</h3>
+    <ul id="historyList"></ul> 
+  </div>
   <script>
-    // Attach the handleFileSelect function to the file input change event
     document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
   </script>
 </body>

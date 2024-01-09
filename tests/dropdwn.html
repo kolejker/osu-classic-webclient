@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.dropbtn {
+  background-color: #000000;
+  border: 2px solid rgb(255, 115, 0);
+  color: white;
+  font-weight: bold;
+  font-size: 26px;
+  width: 430px;
+  text-align: left;
+  cursor: pointer;
+  height: 35px;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #444444;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: -100%; /* Add this line to position the dropdown above the button */
+}
+
+.dropdown-content a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  display: block;
+  background-color: #000000;
+  border: 2px solid rgb(255, 255, 255);
+  font-weight: bold;
+  font-size: 26px;
+  overflow: auto;
+  width: 430px;
+  text-align: left;
+  cursor: pointer;
+  height: 35px;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    top: -100%;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<h2>Clickable Dropdown</h2>
+<p>Click on the button to open the dropdown menu.</p>
+
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Local Ranking</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="#countryr">Country Ranking</a>
+    <a href="#globalr">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</div>
+
+<script>
+function myFunction() {
+  var dropdown = document.getElementById("myDropdown");
+  var links = dropdown.getElementsByTagName("a");
+  var delay = 10; // Delay in milliseconds for the first link to appear
+
+  // Apply fading animation to each link with a delay
+  for (var i = 0; i < links.length; i++) {
+    links[i].style.opacity = 0;
+    links[i].style.top = '-100%';
+    links[i].style.transition = "opacity 0.3s, top 0.5s"; // Specify the transition properties and durations
+    setTimeout((function(link) {
+      return function() {
+        link.style.opacity = 1;
+        link.style.top = '0';
+      };
+    })(links[i]), delay);
+    delay += 100; // Increase the delay for each subsequent link
+  }
+
+  // Toggle the dropdown visibility
+  dropdown.classList.toggle("show");
+}
+</script>
+
+</body>
+</html>

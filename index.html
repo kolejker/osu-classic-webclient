@@ -42,7 +42,9 @@
           <input type="range" min="0" max="100" value="0" class="slider">
         </div>
       </div>
-      
+      <audio id="hover-sound">
+        <source src="/resources/audio/menuhit.wav" type="audio/wav">
+      </audio>
     <div class="container">
       <div class="pulse"></div>
 
@@ -51,10 +53,10 @@
       </div>
       <div id="main-menu">
         <ul>
-          <li class="play" onclick="goPlay(); fadeOutLoader()"> </li>
-          <li class="edit" ></li>
-          <li class="options"  onclick="goOptions(); fadeOutLoader()"></li>
-          <li class="exit" ></li>
+          <li class="play" onmouseover="playHoverSound()" onclick="goPlay(); fadeOutLoader()"></li>
+          <li class="edit" onmouseover="playHoverSound()"></li>
+          <li class="options" onmouseover="playHoverSound()" onclick="goOptions(); fadeOutLoader()"></li>
+          <li class="exit" onmouseover="playHoverSound()"></li>
         </ul>
       </div>
       <div id="play-menu" style="display: none;">
